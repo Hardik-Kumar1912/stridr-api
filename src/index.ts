@@ -8,7 +8,7 @@ dotenv.config();
 
 const app = express();
 app.use(express.json());
-app.use(clerkMiddleware());
+// app.use(clerkMiddleware());
 
 app.get("/health", (req, res) => {
   res.status(200).send("OK");
@@ -22,7 +22,9 @@ app.get("/sample2", (req, res) => {
   res.status(200).json(sample2);
 });
 
-app.use("/api", requireAuth(), baseRouter);
+// app.use("/api", requireAuth(), baseRouter);
+app.use("/api", baseRouter);
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
