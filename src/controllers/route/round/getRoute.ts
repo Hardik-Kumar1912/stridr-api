@@ -6,7 +6,10 @@ interface CustomModelPriority {
 
 interface CustomModel {
   priority: CustomModelPriority[];
-  areas: FeatureCollectionArea[];
+  areas: {
+    type: string;
+    features: FeatureCollectionArea[];
+  };
   distance_influence: number;
 }
 export async function getRoute(
@@ -30,7 +33,7 @@ export async function getRoute(
         multiply_by: "50",
       })
     ),
-    areas: featureCollection.features,
+    areas: featureCollection,
     distance_influence: 100,
   };
 
@@ -42,11 +45,10 @@ export async function getRoute(
     "ch.disable": true,
     custom_model: customModel,
   };
-
-  // console.log(
-  //   "Fetching round-trip route with payload:",
-  //   JSON.stringify(payload),
-  // );
+  if (process.env.NEXT_PUBLIC_DEBUGGING === "ON") {
+    console.log("Custom model:", customModel);
+    console.log("Payload for round-trip route:", payload);
+  }
 
   try {
     const res = await fetch(url, {

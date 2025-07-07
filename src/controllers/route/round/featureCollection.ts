@@ -38,6 +38,7 @@ export async function getFeatureCollection(pois: [number, number][]): Promise<{ 
   };
   if (process.env.NEXT_PUBLIC_DEBUGGING === "ON") {
     console.log("Feature collection generated with", features.length, "features.");
+    console.log(featureCollection);
   }
   return featureCollection;
 }
